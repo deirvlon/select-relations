@@ -10,20 +10,6 @@ Select Relations JS is a lightweight JavaScript library designed to simplify the
 - **Reset Functionality:** Provides built-in functionality to reset the selection of parent select elements if the selected option becomes hidden due to filtering.
 - **Easy Integration:** Simple and intuitive API allows for easy integration into existing projects with minimal setup.
 
-## Installation
-
-You can install Select Relations JS via npm or include it directly in your HTML file:
-
-### npm
-
-`npm install select-relations`
-
-### CDN
-
-`<script src="https://cdn.jsdelivr.net/npm/select-relations/dist/select-relations.min.js"></script>`
-
-
-
 
 ## Usage
 
