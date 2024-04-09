@@ -55,11 +55,11 @@ You can install Select Relations JS via npm or include it directly in your HTML 
 <script>
   SelectRelations(); //Init
 </script>
+```
 
 ## License
 
 Select Relations JS is released under the MIT License.
-
-Company: Deirvlon Technologies
-
-Author: Kamran Gasimov
+- Company: Deirvlon Technologies
+- Author: Kamran Gasimov
+- Website: https://deirvlon.com
