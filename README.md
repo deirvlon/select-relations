@@ -51,7 +51,7 @@ You can install Select Relations JS via npm or include it directly in your HTML 
 
 
 <!-- Select Relations JS -->
-<script src="assets/js/select-relations.js"></script>
+<script src="select-relations.js"></script>
 <script>
   SelectRelations(); //Init
 </script>
