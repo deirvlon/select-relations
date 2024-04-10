@@ -2,26 +2,40 @@
 /*
 --------------------------------------------------
 @ Select Relations JS @
-Version: 1.0.0
+Version: 1.0.1
 
 Author: Kamran Gasimov
 Created: 09.04.2024
-Updated: 09.04.2024
+Updated: 10.04.2024
 © All rights are reserved Deirvlon Technologies.
 --------------------------------------------------
 */
 
 function SelectRelations() {
     document.addEventListener('DOMContentLoaded', function () {
-        initializeFiltering();
 
         const selectRelations = document.querySelectorAll('.select-relations');
 
         selectRelations.forEach(select => {
+            // Check if Select2 is initialized
+            const isSelect2Initialized = $(select).hasClass('select2') !== undefined;
+
+            // Add event listener for change event
             select.addEventListener('change', function () {
                 updateFiltering(this);
             });
+
+            // If Select2 is initialized, also listen to its change event
+            if (isSelect2Initialized) {
+                $(select).on('change.select2', function () {
+                    updateFiltering(this);
+                });
+            }
+
         });
+
+        initializeFiltering();
+
     });
 
     function initializeFiltering() {
@@ -45,9 +59,13 @@ function SelectRelations() {
                         const [selectId, selectValues] = pair.split(':');
                         return document.getElementById(selectId).value === selectValues;
                     });
-                    option.style.display = displayOption ? '' : 'none';
+                    option.disabled = displayOption ? false : true;
+                    option.hidden = displayOption ? false : true;
+                    option.ariaHidden = displayOption ? false : true;
                 }
             });
+
+
         });
 
         // Reset parent selects' selected options if they are hidden due to filtering
@@ -57,12 +75,16 @@ function SelectRelations() {
     function resetParentSelects() {
         document.querySelectorAll(`[data-sf-parent]`).forEach(childSelect => {
             let selectOption = childSelect.options[childSelect.selectedIndex];
-            if (selectOption.style.display === 'none') {
+            if (selectOption.disabled) {
                 childSelect.selectedIndex = -1; // Reset to default
             }
+
+
         });
     }
 
 
 }
 
+// autorun
+SelectRelations(); //Init
