@@ -38,9 +38,6 @@ Select Relations JS is a lightweight JavaScript library designed to simplify the
 
 <!-- Select Relations JS -->
 <script src="select-relations.js"></script>
-<script>
-  SelectRelations(); //Init
-</script>
 ```
 
 ## License
