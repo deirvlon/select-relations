@@ -6,7 +6,7 @@ Version: 1.0.1
 
 Author: Kamran Gasimov
 Created: 09.04.2024
-Updated: 10.04.2024
+Updated: 11.04.2024
 © All rights are reserved Deirvlon Technologies.
 --------------------------------------------------
 */
@@ -42,11 +42,14 @@ function SelectRelations() {
         const selectRelations = document.querySelectorAll('.select-relations');
 
         selectRelations.forEach(select => {
-            updateFiltering(select);
+            updateFiltering(select, false);
         });
+
+        // Reset parent selects' selected options if they are hidden due to filtering
+        resetParentSelects();
     }
 
-    function updateFiltering(select) {
+    function updateFiltering(select, restart = true) {
         const selectedOption = select.options[select.selectedIndex];
         const parentId = select.getAttribute('id');
         const parentValues = parentId.split(',').map(parentId => document.getElementById(parentId).value).join(',');
@@ -68,21 +71,24 @@ function SelectRelations() {
 
         });
 
+
         // Reset parent selects' selected options if they are hidden due to filtering
-        resetParentSelects();
+        if (restart)
+            resetParentSelects();
     }
 
     function resetParentSelects() {
         document.querySelectorAll(`[data-sf-parent]`).forEach(childSelect => {
+            if (childSelect.selectedIndex == null)
+                return;
+
             let selectOption = childSelect.options[childSelect.selectedIndex];
             if (selectOption.disabled) {
-                childSelect.selectedIndex = -1; // Reset to default
+                $(childSelect).val(null).trigger('change.select2');
             }
-
 
         });
     }
-
 
 }
 
