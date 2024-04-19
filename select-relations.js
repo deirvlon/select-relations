@@ -2,7 +2,7 @@
 /*
 --------------------------------------------------
 @ Select Relations JS @
-Version: 1.5.0
+Version: 1.5.1
 
 Author: Kamran Gasimov
 Created: 09.04.2024
@@ -56,14 +56,16 @@ function SelectRelations() {
 
         document.querySelectorAll(`[data-sf-parent*="${parentId}"]`).forEach(childSelect => {
 
-            if (childSelect.tagName == "select")
+            if (childSelect.tagName == "SELECT")
                 // SELECT INPUT
                 childSelect.querySelectorAll('option').forEach(option => {
                     const relationData = option.getAttribute('data-pr');
                     if (relationData) {
                         const displayOption = relationData.split(',').some(pair => {
                             const [selectId, selectValues] = pair.split(':');
-                            return document.getElementById(selectId).value === selectValues;
+
+                            var el_parent = document.getElementById(selectId);
+                            return el_parent.value === selectValues || el_parent.options[el_parent.selectedIndex].dataset.alt === selectValues;
                         });
                         option.disabled = displayOption ? false : true;
                         option.hidden = displayOption ? false : true;
@@ -76,7 +78,9 @@ function SelectRelations() {
                 if (relationData) {
                     const displayOption = relationData.split(',').some(pair => {
                         const [selectId, selectValues] = pair.split(':');
-                        return document.getElementById(selectId).value === selectValues;
+
+                        var el_parent = document.getElementById(selectId);
+                        return el_parent.value === selectValues || el_parent.options[el_parent.selectedIndex].dataset.alt === selectValues;
                     });
                     childSelect.style.display = (displayOption) ? '' : 'none';
                 }
