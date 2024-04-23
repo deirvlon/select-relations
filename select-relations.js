@@ -2,11 +2,11 @@
 /*
 --------------------------------------------------
 @ Select Relations JS @
-Version: 1.5.1
+Version: 1.1.2
 
 Author: Kamran Gasimov
 Created: 09.04.2024
-Updated: 19.04.2024
+Updated: 23.04.2024
 © All rights are reserved Deirvlon Technologies.
 --------------------------------------------------
 */
@@ -61,11 +61,12 @@ function SelectRelations() {
                 childSelect.querySelectorAll('option').forEach(option => {
                     const relationData = option.getAttribute('data-pr');
                     if (relationData) {
-                        const displayOption = relationData.split(',').some(pair => {
+                        const displayOption = relationData.split('&').some(pair => {
                             const [selectId, selectValues] = pair.split(':');
 
                             var el_parent = document.getElementById(selectId);
-                            return el_parent.value === selectValues || el_parent.options[el_parent.selectedIndex].dataset.alt === selectValues;
+                            var ids = selectValues.split(',');
+                            return ids.includes(el_parent.value) || ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt);
                         });
                         option.disabled = displayOption ? false : true;
                         option.hidden = displayOption ? false : true;
@@ -76,11 +77,12 @@ function SelectRelations() {
                 //NORMAL INPUTS
                 const relationData = childSelect.getAttribute('data-pr');
                 if (relationData) {
-                    const displayOption = relationData.split(',').some(pair => {
+                    const displayOption = relationData.split('&').some(pair => {
                         const [selectId, selectValues] = pair.split(':');
 
                         var el_parent = document.getElementById(selectId);
-                        return el_parent.value === selectValues || el_parent.options[el_parent.selectedIndex].dataset.alt === selectValues;
+                        var ids = selectValues.split(',');
+                        return ids.includes(el_parent.value) || ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt);
                     });
                     childSelect.style.display = (displayOption) ? '' : 'none';
                 }
