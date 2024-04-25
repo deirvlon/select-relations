@@ -98,7 +98,7 @@ function SelectRelations() {
     function resetParentSelects() {
         document.querySelectorAll(`[data-sf-parent]`).forEach(childSelect => {
 
-            if (childSelect.tagName == "select") {
+            if (childSelect.tagName == "SELECT") {
                 // SELECT INPUT
 
                 if (childSelect.selectedIndex == null || childSelect.selectedIndex == -1)
