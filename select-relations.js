@@ -66,7 +66,7 @@ function SelectRelations() {
 
                             var el_parent = document.getElementById(selectId);
                             var ids = selectValues.split(',');
-                            return ids.includes(el_parent.value) || ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt);
+                            return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex]!=undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
                         });
                         option.disabled = displayOption ? false : true;
                         option.hidden = displayOption ? false : true;
@@ -82,7 +82,7 @@ function SelectRelations() {
 
                         var el_parent = document.getElementById(selectId);
                         var ids = selectValues.split(',');
-                        return ids.includes(el_parent.value) || ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt);
+                        return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex]!=undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
                     });
                     childSelect.style.display = (displayOption) ? '' : 'none';
                 }
