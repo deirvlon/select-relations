@@ -37,6 +37,7 @@ Select Relations JS is a lightweight JavaScript library designed to simplify the
 
 
 <!-- Select Relations JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="select-relations.js"></script>
 ```
 
