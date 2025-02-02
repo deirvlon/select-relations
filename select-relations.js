@@ -2,21 +2,34 @@
 /*
 --------------------------------------------------
 @ Select Relations JS @
-Version: 1.1.2
+Version: 1.2.1
 
 Author: Kamran Gasimov
 Created: 09.04.2024
-Updated: 23.04.2024
+Updated: 02.02.2025
 © All rights are reserved Deirvlon Technologies.
 --------------------------------------------------
 */
 
 function SelectRelations() {
+    // Expose a global function to manually update relations
+    window.updateSelectRelations = function () {
+        initializeFiltering();
+    };
+
     document.addEventListener('DOMContentLoaded', function () {
 
+        initializeFiltering();
+
+    });
+
+    function initializeFiltering() {
         const selectRelations = document.querySelectorAll('.select-relations');
 
         selectRelations.forEach(select => {
+            // COLD START
+            updateFiltering(select, false);
+
             // Check if Select2 is initialized
             const isSelect2Initialized = $(select).hasClass('select2') !== undefined;
 
@@ -33,18 +46,6 @@ function SelectRelations() {
             }
 
         });
-
-        initializeFiltering();
-
-    });
-
-    function initializeFiltering() {
-        const selectRelations = document.querySelectorAll('.select-relations');
-
-        selectRelations.forEach(select => {
-            updateFiltering(select, false);
-        });
-
         // Reset parent selects' selected options if they are hidden due to filtering
         resetParentSelects();
     }
@@ -66,7 +67,7 @@ function SelectRelations() {
 
                             var el_parent = document.getElementById(selectId);
                             var ids = selectValues.split(',');
-                            return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex]!=undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
+                            return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex] != undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
                         });
                         option.disabled = displayOption ? false : true;
                         option.hidden = displayOption ? false : true;
@@ -82,7 +83,7 @@ function SelectRelations() {
 
                         var el_parent = document.getElementById(selectId);
                         var ids = selectValues.split(',');
-                        return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex]!=undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
+                        return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex] != undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
                     });
                     childSelect.style.display = (displayOption) ? '' : 'none';
                 }
@@ -114,6 +115,7 @@ function SelectRelations() {
 
         });
     }
+
 
 }
 
