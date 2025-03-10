@@ -2,11 +2,11 @@
 /*
 --------------------------------------------------
 @ Select Relations JS @
-Version: 1.2.1
+Version: 1.1.3
 
 Author: Kamran Gasimov
 Created: 09.04.2024
-Updated: 02.02.2025
+Updated: 10.04.2025
 © All rights are reserved Deirvlon Technologies.
 --------------------------------------------------
 */
@@ -51,10 +51,7 @@ function SelectRelations() {
     }
 
     function updateFiltering(select, restart = true) {
-        const selectedOption = select.options[select.selectedIndex];
         const parentId = select.getAttribute('id');
-        const parentValues = parentId.split(',').map(parentId => document.getElementById(parentId).value).join(',');
-
         document.querySelectorAll(`[data-sf-parent*="${parentId}"]`).forEach(childSelect => {
 
             if (childSelect.tagName == "SELECT")
@@ -67,7 +64,11 @@ function SelectRelations() {
 
                             var el_parent = document.getElementById(selectId);
                             var ids = selectValues.split(',');
-                            return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex] != undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
+
+                            if (el_parent.type == "checkbox")
+                                return ids.includes(el_parent.checked ? '1' : '0')
+                            else
+                                return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex] != undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
                         });
                         option.disabled = displayOption ? false : true;
                         option.hidden = displayOption ? false : true;
@@ -83,7 +84,11 @@ function SelectRelations() {
 
                         var el_parent = document.getElementById(selectId);
                         var ids = selectValues.split(',');
-                        return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex] != undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
+
+                        if (el_parent.type == "checkbox")
+                            return ids.includes(el_parent.checked ? '1' : '0')
+                        else
+                            return ids.includes(el_parent.value) || (el_parent.options[el_parent.selectedIndex] != undefined && ids.includes(el_parent.options[el_parent.selectedIndex].dataset.alt));
                     });
                     childSelect.style.display = (displayOption) ? '' : 'none';
                 }
