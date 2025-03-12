@@ -2,11 +2,11 @@
 /*
 --------------------------------------------------
 @ Select Relations JS @
-Version: 1.1.3
+Version: 1.1.4
 
 Author: Kamran Gasimov
 Created: 09.04.2024
-Updated: 10.04.2025
+Updated: 12.04.2025
 © All rights are reserved Deirvlon Technologies.
 --------------------------------------------------
 */
@@ -79,7 +79,7 @@ function SelectRelations() {
                 //NORMAL INPUTS
                 const relationData = childSelect.getAttribute('data-pr');
                 if (relationData) {
-                    const displayOption = relationData.split('&').some(pair => {
+                    const displayOption = relationData.split('&').every(pair => {
                         const [selectId, selectValues] = pair.split(':');
 
                         var el_parent = document.getElementById(selectId);
