@@ -59,7 +59,7 @@ function SelectRelations() {
                 childSelect.querySelectorAll('option').forEach(option => {
                     const relationData = option.getAttribute('data-pr');
                     if (relationData) {
-                        const displayOption = relationData.split('&').some(pair => {
+                        const displayOption = relationData.split('&').every(pair => {
                             const [selectId, selectValues] = pair.split(':');
 
                             var el_parent = document.getElementById(selectId);
