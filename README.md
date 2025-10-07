@@ -28,6 +28,8 @@ A powerful, lightweight JavaScript library for creating dynamic form dependencie
 - **Zero Dependencies**: Works with vanilla JavaScript (jQuery only needed for Select2)
 - **Lightweight**: Minimal footprint with optimized performance
 - **Easy Integration**: Simple API with data attributes
+## ✅ Examples
+- **Examples**: [https://deirvlon.github.io/select-relations/select_relations_demo.html](https://deirvlon.github.io/select-relations/select_relations_demo.html)
 
 ## 📦 Installation
 
@@ -347,7 +349,7 @@ Select Relations JS is released under the MIT License. See [LICENSE](LICENSE) fi
 © All rights are reserved Deirvlon Technologies.
 
 ## 🆘 Support
-
+- **Examples**: [https://deirvlon.github.io/select-relations/select_relations_demo.html](https://deirvlon.github.io/select-relations/select_relations_demo.html)
 - **Documentation**: [https://deirvlon.github.io/select-relations](https://deirvlon.github.io/select-relations)
 - **Issues**: [GitHub Issues](https://github.com/deirvlon/select-relations/issues)
 - **Email**: support@deirvlon.com
