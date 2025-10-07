@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Relations JS - Demo</title>
+    
+    <!-- jQuery (required for Select2) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- Select2 CSS & JS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            font-size: 1.3em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        select, input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #1976D2;
+        }
+        
+        .example-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+        
+        code {
+            background: #263238;
+            color: #aed581;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        option:disabled {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Relations JS v2.0.0 Demo</h1>
+        
+        <div class="info-box">
+            <h3>🎯 What This Does</h3>
+            <p>This library allows you to create dynamic form dependencies where options in one field control the visibility/availability of options in other fields using logical operators:</p>
+            <ul>
+                <li><code>&</code> - AND logic (all conditions must be true)</li>
+                <li><code>|</code> - OR logic (at least one condition must be true)</li>
+                <li><code>()</code> - Grouping for complex conditions</li>
+            </ul>
+        </div>
+
+        <!-- Example 1: Simple AND Logic -->
+        <div class="example-section">
+            <h2>Example 1: Simple AND Logic <span class="badge">Basic</span></h2>
+            <p>Select both Country AND City to see available hotels</p>
+            
+            <div class="form-group">
+                <label for="country1">Country:</label>
+                <select id="country1" class="select-relations">
+                    <option value="">-- Select Country --</option>
+                    <option value="1">USA</option>
+                    <option value="2">Canada</option>
+                    <option value="3">UK</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="city1">City:</label>
+                <select id="city1" class="select-relations" data-sf-parent="country1">
+                    <option value="">-- Select City --</option>
+                    <option value="ny" data-pr="country1:1">New York</option>
+                    <option value="la" data-pr="country1:1">Los Angeles</option>
+                    <option value="toronto" data-pr="country1:2">Toronto</option>
+                    <option value="vancouver" data-pr="country1:2">Vancouver</option>
+                    <option value="london" data-pr="country1:3">London</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="hotel1">Hotel (requires Country AND City):</label>
+                <select id="hotel1" data-sf-parent="country1,city1">
+                    <option value="">-- Select Hotel --</option>
+                    <option value="h1" data-pr="country1:1&city1:ny">Times Square Hotel</option>
+                    <option value="h2" data-pr="country1:1&city1:la">Beverly Hills Hotel</option>
+                    <option value="h3" data-pr="country1:2&city1:toronto">Toronto Plaza</option>
+                    <option value="h4" data-pr="country1:3&city1:london">London Bridge Hotel</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Example 2: OR Logic -->
+        <div class="example-section">
+            <h2>Example 2: OR Logic <span class="badge">New</span></h2>
+            <p>Some services are available in multiple countries</p>
+            
+            <div class="form-group">
+                <label for="country2">Country:</label>
+                <select id="country2" class="select-relations">
+                    <option value="">-- Select Country --</option>
+                    <option value="1">USA</option>
+                    <option value="2">Canada</option>
+                    <option value="3">UK</option>
+                    <option value="4">Germany</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="service2">Available Services:</label>
+                <select id="service2" data-sf-parent="country2">
+                    <option value="">-- Select Service --</option>
+                    <option value="s1" data-pr="country2:1">US Only Service</option>
+                    <option value="s2" data-pr="country2:1|country2:2">North America Service</option>
+                    <option value="s3" data-pr="country2:3|country2:4">European Service</option>
+                    <option value="s4" data-pr="country2:1|country2:2|country2:3|country2:4">Global Service</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Example 3: Complex Grouping -->
+        <div class="example-section">
+            <h2>Example 3: Parenthesis Grouping <span class="badge">Advanced</span></h2>
+            <p>Products available based on complex conditions: (Country AND Category) OR (Membership)</p>
+            
+            <div class="form-group">
+                <label for="country3">Country:</label>
+                <select id="country3" class="select-relations">
+                    <option value="">-- Select Country --</option>
+                    <option value="1">USA</option>
+                    <option value="2">Canada</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="category3">Category:</label>
+                <select id="category3" class="select-relations">
+                    <option value="">-- Select Category --</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="books">Books</option>
+                    <option value="premium">Premium Items</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="membership3" class="select-relations">
+                    Premium Membership
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label for="product3">Available Products:</label>
+                <select id="product3" data-sf-parent="country3,category3,membership3">
+                    <option value="">-- Select Product --</option>
+                    <option value="p1" data-pr="country3:1&category3:electronics">US Electronics</option>
+                    <option value="p2" data-pr="country3:2&category3:books">Canadian Books</option>
+                    <option value="p3" data-pr="(country3:1&category3:premium)|membership3:1">
+                        Premium Item (USA Premium OR Members Only)
+                    </option>
+                    <option value="p4" data-pr="(country3:1|country3:2)&category3:electronics">
+                        North America Electronics
+                    </option>
+                    <option value="p5" data-pr="membership3:1">Members Exclusive</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Example 4: Mixed Logic -->
+        <div class="example-section">
+            <h2>Example 4: Real-World Scenario <span class="badge">Complete</span></h2>
+            <p>Vehicle configuration with multiple dependencies</p>
+            
+            <div class="form-group">
+                <label for="vehicle_type">Vehicle Type:</label>
+                <select id="vehicle_type" class="select-relations">
+                    <option value="">-- Select Type --</option>
+                    <option value="car">Car</option>
+                    <option value="truck">Truck</option>
+                    <option value="suv">SUV</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="engine">Engine:</label>
+                <select id="engine" class="select-relations" data-sf-parent="vehicle_type">
+                    <option value="">-- Select Engine --</option>
+                    <option value="v4" data-pr="vehicle_type:car">4-Cylinder</option>
+                    <option value="v6" data-pr="vehicle_type:car|vehicle_type:suv">V6</option>
+                    <option value="v8" data-pr="vehicle_type:truck|vehicle_type:suv">V8</option>
+                    <option value="electric" data-pr="vehicle_type:car|vehicle_type:suv">Electric</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="premium_package" class="select-relations">
+                    Premium Package
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label for="features">Available Features:</label>
+                <select id="features" data-sf-parent="vehicle_type,engine,premium_package" multiple style="height: 150px;">
+                    <option value="f1" data-pr="vehicle_type:car&engine:electric">
+                        Fast Charging (Electric Cars Only)
+                    </option>
+                    <option value="f2" data-pr="(vehicle_type:truck|vehicle_type:suv)&engine:v8">
+                        Towing Package (V8 Trucks/SUVs)
+                    </option>
+                    <option value="f3" data-pr="premium_package:1">
+                        Leather Seats (Premium Package)
+                    </option>
+                    <option value="f4" data-pr="(engine:v6|engine:v8)&premium_package:1">
+                        Sport Mode (V6/V8 + Premium)
+                    </option>
+                    <option value="f5" data-pr="vehicle_type:suv|(vehicle_type:truck&premium_package:1)">
+                        4WD System (All SUVs OR Premium Trucks)
+                    </option>
+                    <option value="f6" data-pr="vehicle_type:car|vehicle_type:suv|vehicle_type:truck">
+                        Bluetooth Audio (All Vehicles)
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select Relations Library -->
+    <script>
+/*
+--------------------------------------------------
+@ Select Relations JS @
+Version: 2.0.0
+
+Author: Kamran Gasimov
+Created: 09.04.2024
+Updated: 08.10.2025
+© All rights are reserved Deirvlon Technologies.
+--------------------------------------------------
+*/
+
+function SelectRelations() {
+    // Expose a global function to manually update relations
+    window.updateSelectRelations = function () {
+        initializeFiltering();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeFiltering();
+        
+        // Initialize Select2 for better UX
+        $('.select-relations').select2({
+            placeholder: "-- Select an option --",
+            allowClear: true
+        });
+    });
+
+    function initializeFiltering() {
+        const selectRelations = document.querySelectorAll('.select-relations');
+
+        selectRelations.forEach(select => {
+            // COLD START
+            updateFiltering(select, false);
+
+            // Check if Select2 is initialized
+            const isSelect2Initialized = $(select).hasClass('select2') !== undefined;
+
+            // Add event listener for change event
+            select.addEventListener('change', function () {
+                updateFiltering(this);
+            });
+
+            // If Select2 is initialized, also listen to its change event
+            if (isSelect2Initialized) {
+                $(select).on('change.select2', function () {
+                    updateFiltering(this);
+                });
+            }
+        });
+        
+        // Reset parent selects' selected options if they are hidden due to filtering
+        resetParentSelects();
+    }
+
+    function updateFiltering(select, restart = true) {
+        const parentId = select.getAttribute('id');
+        document.querySelectorAll(`[data-sf-parent*="${parentId}"]`).forEach(childSelect => {
+
+            if (childSelect.tagName == "SELECT") {
+                // SELECT INPUT
+                childSelect.querySelectorAll('option').forEach(option => {
+                    const relationData = option.getAttribute('data-pr');
+                    if (relationData) {
+                        const displayOption = evaluateRelation(relationData);
+                        option.disabled = !displayOption;
+                        option.hidden = !displayOption;
+                        option.ariaHidden = !displayOption;
+                    }
+                });
+            } else {
+                // NORMAL INPUTS
+                const relationData = childSelect.getAttribute('data-pr');
+                if (relationData) {
+                    const displayOption = evaluateRelation(relationData);
+                    childSelect.style.display = displayOption ? '' : 'none';
+                }
+            }
+        });
+
+        // Reset parent selects' selected options if they are hidden due to filtering
+        if (restart)
+            resetParentSelects();
+    }
+
+    /**
+     * Evaluates a relation string with support for AND (&), OR (|), and parenthesis grouping
+     * @param {string} relationData - The relation expression to evaluate
+     * @returns {boolean} - Whether the condition is met
+     */
+    function evaluateRelation(relationData) {
+        // Remove extra whitespace
+        relationData = relationData.trim();
+        
+        // Handle parenthesis grouping
+        while (relationData.includes('(')) {
+            relationData = relationData.replace(/\(([^()]+)\)/g, (match, group) => {
+                return evaluateSimpleExpression(group) ? '1' : '0';
+            });
+        }
+        
+        // After resolving all parentheses, evaluate the final expression
+        return evaluateSimpleExpression(relationData);
+    }
+
+    /**
+     * Evaluates a simple expression without parentheses
+     * Handles OR (|) and AND (&) operators with proper precedence (AND before OR)
+     * @param {string} expression - Expression without parentheses
+     * @returns {boolean} - Result of evaluation
+     */
+    function evaluateSimpleExpression(expression) {
+        // Handle boolean results from parenthesis evaluation
+        if (expression === '1') return true;
+        if (expression === '0') return false;
+        
+        // Split by OR operator (lower precedence)
+        const orParts = expression.split('|');
+        
+        // If any OR part is true, return true
+        return orParts.some(orPart => {
+            // Split by AND operator (higher precedence)
+            const andParts = orPart.split('&');
+            
+            // All AND parts must be true
+            return andParts.every(andPart => {
+                andPart = andPart.trim();
+                
+                // Handle already evaluated boolean values
+                if (andPart === '1') return true;
+                if (andPart === '0') return false;
+                
+                // Evaluate the condition
+                return evaluateCondition(andPart);
+            });
+        });
+    }
+
+    /**
+     * Evaluates a single condition (selectId:values)
+     * @param {string} condition - Single condition string
+     * @returns {boolean} - Whether condition is met
+     */
+    function evaluateCondition(condition) {
+        const [selectId, selectValues] = condition.split(':');
+        
+        if (!selectId || !selectValues) return false;
+        
+        const el_parent = document.getElementById(selectId.trim());
+        if (!el_parent) return false;
+        
+        const ids = selectValues.split(',').map(v => v.trim());
+        
+        if (el_parent.type === "checkbox") {
+            return ids.includes(el_parent.checked ? '1' : '0');
+        } else {
+            const selectedOption = el_parent.options ? el_parent.options[el_parent.selectedIndex] : null;
+            return ids.includes(el_parent.value) || 
+                   (selectedOption && selectedOption.dataset.alt && ids.includes(selectedOption.dataset.alt));
+        }
+    }
+
+    function resetParentSelects() {
+        document.querySelectorAll(`[data-sf-parent]`).forEach(childSelect => {
+            if (childSelect.tagName == "SELECT") {
+                // SELECT INPUT
+                if (childSelect.selectedIndex == null || childSelect.selectedIndex == -1)
+                    return;
+
+                let selectOption = childSelect.options[childSelect.selectedIndex];
+                if (selectOption && selectOption.disabled) {
+                    $(childSelect).val(null).trigger('change.select2');
+                }
+            }
+        });
+    }
+}
+
+// autorun
+SelectRelations(); //Init
+    </script>
+</body>
+</html>
